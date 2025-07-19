@@ -1,7 +1,8 @@
 // script.js
 
 // Base URL for your backend API
-const API_BASE_URL = 'https://af-invest-backend-api-anda-81bb04a352e2.herokuapp.com'; // Sesuaikan jika backend Anda di-deploy ke URL lain
+// Ini adalah URL backend Heroku Anda yang sudah di-deploy
+const API_BASE_URL = 'https://af-invest-backend-api-anda-81bb84a552e2.herokuapp.com/api';
 
 // Helper function to show messages
 function showMessage(elementId, message, type) {
@@ -14,7 +15,7 @@ function showMessage(elementId, message, type) {
     }, 5000); // Hide after 5 seconds
 }
 
-// Function to handle authentication (login/register)
+// Function to handle authentication (login)
 async function authenticateUser(endpoint, phoneNumber, password) {
     try {
         const response = await fetch(`${API_BASE_URL}/auth/${endpoint}`, {
@@ -36,12 +37,6 @@ async function authenticateUser(endpoint, phoneNumber, password) {
                     updateUIForAuth(true); // Update UI to logged-in state
                     fetchStockPicks(); // Load stock picks after login
                 }, 1000);
-            } else { // register-manual-user
-                showMessage('auth-message', data.message, 'success');
-                // Optionally switch to login form after successful registration
-                document.getElementById('login-form').classList.remove('hidden');
-                document.getElementById('register-form').classList.add('hidden');
-                document.getElementById('auth-modal-title').textContent = 'Login';
             }
         } else {
             showMessage('auth-message', data.message || 'Terjadi kesalahan.', 'error');
@@ -155,58 +150,44 @@ async function addStockPick(event) {
 
 // Function to update UI based on authentication status
 function updateUIForAuth(isLoggedIn) {
-    const authLink = document.getElementById('auth-link');
+    // Menggunakan ID yang benar sesuai HTML terbaru
+    const loginLink = document.getElementById('login-link');
+    const registerExternalLink = document.getElementById('register-external-link'); // Link daftar eksternal
     const logoutLink = document.getElementById('logout-link');
     const dashboardSection = document.getElementById('dashboard-section');
-    const contentWrapper = document.getElementById('content-wrapper'); // The main content div
+    const contentWrapper = document.getElementById('content-wrapper');
 
     if (isLoggedIn) {
-        authLink.classList.add('hidden');
+        loginLink.classList.add('hidden');
+        registerExternalLink.classList.add('hidden'); // Sembunyikan link daftar
         logoutLink.classList.remove('hidden');
         dashboardSection.classList.remove('hidden');
-        contentWrapper.classList.add('logged-in'); // Add class to body for global styling
+        contentWrapper.classList.add('logged-in');
         contentWrapper.classList.remove('not-logged-in');
-        // Scroll to dashboard section or make it prominent
         dashboardSection.scrollIntoView({ behavior: 'smooth' });
     } else {
-        authLink.classList.remove('hidden');
+        loginLink.classList.remove('hidden');
+        registerExternalLink.classList.remove('hidden'); // Tampilkan link daftar
         logoutLink.classList.add('hidden');
         dashboardSection.classList.add('hidden');
         contentWrapper.classList.remove('logged-in');
         contentWrapper.classList.add('not-logged-in');
-        localStorage.removeItem('token'); // Ensure token is removed on logout
+        localStorage.removeItem('token');
     }
 }
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Loading screen logic
-    const loadingScreen = document.getElementById('loading-screen');
+    // Langsung tampilkan konten dan cek status auth saat DOM siap
     const contentWrapper = document.getElementById('content-wrapper');
-    const progressBar = document.getElementById('progress-bar');
-
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += 10;
-        progressBar.style.width = progress + '%';
-        if (progress >= 100) {
-            clearInterval(interval);
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-                loadingScreen.style.visibility = 'hidden';
-                loadingScreen.style.display = 'none'; // Ensure it's fully hidden
-                contentWrapper.classList.add('content-visible');
-                // Check auth status on load
-                const token = localStorage.getItem('token');
-                if (token) {
-                    updateUIForAuth(true);
-                    fetchStockPicks();
-                } else {
-                    updateUIForAuth(false);
-                }
-            }, 800);
-        }
-    }, 300);
+    contentWrapper.classList.add('content-visible');
+    const token = localStorage.getItem('token');
+    if (token) {
+        updateUIForAuth(true);
+        fetchStockPicks();
+    } else {
+        updateUIForAuth(false);
+    }
 
     // Menu Toggle
     const menuToggle = document.getElementById('menu-toggle');
@@ -235,47 +216,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auth Modal Logic
     const authModal = document.getElementById('auth-modal');
-    const authLink = document.getElementById('auth-link');
-    const closeButton = authModal.querySelector('.close-button');
+    const loginLink = document.getElementById('login-link'); // Menggunakan ID yang benar
     const loginForm = document.getElementById('login-form');
-    const registerForm = document.getElementById('register-form');
     const authModalTitle = document.getElementById('auth-modal-title');
-    const toggleFormLinks = document.querySelectorAll('.toggle-form-link');
     const logoutLink = document.getElementById('logout-link');
 
-    authLink.addEventListener('click', (e) => {
+    // Event listener untuk link Login
+    loginLink.addEventListener('click', (e) => {
         e.preventDefault();
         authModal.style.display = 'flex'; // Use flex to center
+        // Hanya tampilkan form login
         loginForm.classList.remove('hidden');
-        registerForm.classList.add('hidden');
         authModalTitle.textContent = 'Login';
         document.getElementById('auth-message').style.display = 'none'; // Clear previous messages
     });
 
-    closeButton.addEventListener('click', () => {
-        authModal.style.display = 'none';
-    });
-
+    // Event listener untuk menutup modal saat klik di luar konten modal
     window.addEventListener('click', (e) => {
         if (e.target === authModal) {
             authModal.style.display = 'none';
         }
-    });
-
-    toggleFormLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (e.target.dataset.form === 'register') {
-                loginForm.classList.add('hidden');
-                registerForm.classList.remove('hidden');
-                authModalTitle.textContent = 'Daftar';
-            } else {
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
-                authModalTitle.textContent = 'Login';
-            }
-            document.getElementById('auth-message').style.display = 'none'; // Clear messages on form toggle
-        });
     });
 
     // Login Form Submission
@@ -284,14 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const phoneNumber = document.getElementById('login-phoneNumber').value;
         const password = document.getElementById('login-password').value;
         await authenticateUser('login', phoneNumber, password);
-    });
-
-    // Register Form Submission
-    registerForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const phoneNumber = document.getElementById('register-phoneNumber').value;
-        const password = document.getElementById('register-password').value;
-        await authenticateUser('register-manual-user', phoneNumber, password);
     });
 
     // Logout Link
@@ -306,10 +258,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add Stock Pick Form Submission
     document.getElementById('add-stock-pick-form').addEventListener('submit', addStockPick);
 });
-const corsOptions = {
-  origin: 'https://pii006.github.io/af-invest-frontend/', // Ini HARUS URL GitHub Pages frontend Anda
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204
-};
-app.use(cors(corsOptions));
