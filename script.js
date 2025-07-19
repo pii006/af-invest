@@ -90,6 +90,27 @@ function updateUIForAuth(isLoggedIn) {
 }
 
 // Function to show specific dashboard content
+async function fetchSpreadsheetLinks() {
+    const spreadsheetsList = document.getElementById('spreadsheet-links-list');
+    if (!spreadsheetsList) return;
+    spreadsheetsList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat link spreadsheet...</p>';
+    // TODO: Implement actual fetch from backend API for spreadsheets
+    // For now, mock data:
+    setTimeout(() => {
+        spreadsheetsList.innerHTML = `
+            <div class="spreadsheet-item">
+                <h4>Rekomendasi Saham Update</h4>
+                <p>Spreadsheet ini berisi stockpick rekomendasi saham.</p>
+                <a href="https://docs.google.com/spreadsheets/d/someid1" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
+            </div>
+            <div class="spreadsheet-item">
+                <h4>Daftar Saham Dividen</h4>
+                <p>Daftar saham dengan riwayat dividen yang menarik.</p>
+                <a href="https://docs.google.com/spreadsheets/d/someid2" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
+            </div>
+        `;
+    }, 1000);
+}
 function showDashboardContent(contentType) {
     // Hide all content sections
     document.querySelectorAll('.dashboard-content').forEach(section => {
@@ -171,27 +192,6 @@ async function fetchPdfMaterials() {
     }, 1000);
 }
 
-async function fetchSpreadsheetLinks() {
-    const spreadsheetsList = document.getElementById('spreadsheet-links-list');
-    if (!spreadsheetsList) return;
-    spreadsheetsList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat link spreadsheet...</p>';
-    // TODO: Implement actual fetch from backend API for spreadsheets
-    // For now, mock data:
-    setTimeout(() => {
-        spreadsheetsList.innerHTML = `
-            <div class="spreadsheet-item">
-                <h4>Rekomendasi Saham Update</h4>
-                <p>Spreadsheet ini berisi stockpick rekomendasi saham.</p>
-                <a href="https://docs.google.com/spreadsheets/d/someid1" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
-            </div>
-            <div class="spreadsheet-item">
-                <h4>Daftar Saham Dividen</h4>
-                <p>Daftar saham dengan riwayat dividen yang menarik.</p>
-                <a href="https://docs.google.com/spreadsheets/d/someid2" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
-            </div>
-        `;
-    }, 1000);
-}
 
 async function fetchArticles() {
     const articlesList = document.getElementById('articles-list');
