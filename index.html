@@ -19,22 +19,29 @@
           <img src="assets/AFINVESTLOGO.jpg" alt="AF Invest Logo" class="header-logo">
           AF<span class="highlight">Invest</span>
         </a>
+
+        <!-- Kontrol di sisi kanan: Tombol Auth dan Menu Toggle -->
+        <div class="header-right-controls">
+            <a href="#" class="nav-link nav-auth-btn" id="auth-link">Login / Register</a>
+            <a href="#" class="nav-link nav-auth-btn hidden" id="logout-link">Logout</a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Buka tutup menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="menu-text">Menu</span> <!-- Tambahkan teks "Menu" -->
+            </button>
+        </div>
+
+        <!-- Main Navigation (akan diatur oleh CSS untuk muncul/sembunyi) -->
         <nav class="nav" role="navigation" aria-label="Menu navigasi utama">
           <ul class="nav-list" id="nav-list">
-            <li class="nav-item"><a href="#tentang" class="nav-link">Tentang AF Invest</a></li>
-            <li class="nav-item"><a href="#layanan" class="nav-link">Layanan</a></li>
-            <li class="nav-item"><a href="#mengapa" class="nav-link">Mengapa Kami?</a></li>
-            <li class="nav-item"><a href="#kontak" class="nav-link">Kontak</a></li>
-            <!-- Link Login/Register tunggal -->
-            <li class="nav-item"><a href="#" class="nav-link" id="auth-link">Login / Register</a></li>
-            <li class="nav-item"><a href="#" class="nav-link hidden" id="logout-link">Logout</a></li>
+            <li class="nav-item"><a href="#tentang" class="nav-link btn-primary-menu-item">Tentang AF Invest</a></li>
+            <li class="nav-item"><a href="#layanan" class="nav-link btn-primary-menu-item">Layanan</a></li>
+            <li class="nav-item"><a href="#mengapa" class="nav-link btn-primary-menu-item">Mengapa Kami?</a></li>
+            <li class="nav-item"><a href="#testimonials-section" class="nav-link btn-primary-menu-item">Testimoni</a></li>
+            <li class="nav-item"><a href="#kontak" class="nav-link btn-primary-menu-item">Kontak</a></li>
           </ul>
         </nav>
-        <button class="menu-toggle" id="menu-toggle" aria-label="Buka tutup menu">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </button>
       </div>
     </header>
 
@@ -137,6 +144,71 @@
         </div>
       </section>
 
+      <!-- Testimonials Section - Public Facing Carousel -->
+      <section class="testimonials-section" id="testimonials-section" aria-labelledby="testimonials-title">
+        <div class="container">
+          <h3 class="section-title" id="testimonials-title">Apa Kata Member Kami?</h3>
+          <p class="section-text">Dengar pengalaman nyata dari member AF Invest yang telah merasakan manfaatnya.</p>
+          
+          <div class="testimonial-carousel">
+            <div class="carousel-inner" id="carousel-inner">
+              <!-- Testimonial Slides (Anda bisa menambahkan lebih banyak di sini) -->
+              <div class="testimonial-slide testimonial-card">
+                <div class="testimonial-header">
+                  <div class="user-avatar">AD</div>
+                  <div class="user-info">
+                    <div class="user-name">Adi Dharma</div>
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                  </div>
+                </div>
+                <p class="testimonial-text">"AF Invest benar-benar mengubah cara saya melihat investasi. Analisisnya sangat membantu dan mudah dipahami!"</p>
+                <p class="testimonial-date">15 Juli 2025</p>
+              </div>
+
+              <div class="testimonial-slide testimonial-card">
+                <div class="testimonial-header">
+                  <div class="user-avatar">SR</div>
+                  <div class="user-info">
+                    <div class="user-name">Siti Rahayu</div>
+                    <div class="rating">⭐⭐⭐⭐</div>
+                  </div>
+                </div>
+                <p class="testimonial-text">"Saya pemula, tapi dengan panduan dari AF Invest, saya jadi lebih percaya diri. Materinya lengkap!"</p>
+                <p class="testimonial-date">10 Juli 2025</p>
+              </div>
+
+              <div class="testimonial-slide testimonial-card">
+                <div class="testimonial-header">
+                  <div class="user-avatar">RW</div>
+                  <div class="user-info">
+                    <div class="user-name">Rudi Wijaya</div>
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                  </div>
+                </div>
+                <p class="testimonial-text">"Grup diskusinya sangat aktif dan informatif. Banyak belajar dari sesama member dan mentor!"</p>
+                <p class="testimonial-date">01 Juli 2025</p>
+              </div>
+
+              <div class="testimonial-slide testimonial-card">
+                <div class="testimonial-header">
+                  <div class="user-avatar">DN</div>
+                  <div class="user-info">
+                    <div class="user-name">Dewi Novita</div>
+                    <div class="rating">⭐⭐⭐⭐</div>
+                  </div>
+                </div>
+                <p class="testimonial-text">"Rekomendasi sahamnya cukup akurat, sangat membantu dalam pengambilan keputusan investasi saya."</p>
+                <p class="testimonial-date">28 Juni 2025</p>
+              </div>
+
+            </div>
+            <button class="carousel-button prev" aria-label="Previous testimonial">&#10094;</button>
+            <button class="carousel-button next" aria-label="Next testimonial">&#10095;</button>
+            <div class="carousel-dots" id="carousel-dots"></div>
+          </div>
+        </div>
+      </section>
+
       <section class="contact" id="kontak" aria-labelledby="contact-title">
         <div class="container">
           <h3 class="section-title" id="contact-title">Hubungi Kami</h3>
@@ -156,26 +228,17 @@
           <!-- Dashboard Navigation -->
           <nav class="dashboard-nav">
             <ul class="dashboard-nav-list">
-              <li><a href="#" class="dashboard-nav-link" data-content="spreadsheet-links">Rekomendasi Saham</a></li>
-              <li><a href="#" class="dashboard-nav-link" data-content="educational-videos">Edukasi Video</a></li>
+              <li><a href="#" class="dashboard-nav-link active" data-content="educational-videos">Edukasi Video</a></li>
               <li><a href="#" class="dashboard-nav-link" data-content="educational-pdfs">Edukasi PDF</a></li>
+              <li><a href="#" class="dashboard-nav-link" data-content="spreadsheet-links">Link Spreadsheet</a></li>
               <li><a href="#" class="dashboard-nav-link" data-content="articles">Artikel Edukasi</a></li>
             </ul>
           </nav>
 
           <!-- Content Areas for each section -->
-
-          <!-- Spreadsheet Links Section -->
-            <div id="spreadsheet-links-content" class="dashboard-content hidden">
-              <h3 class="section-subtitle">Rekomendasi Saham</h3>
-              <p class="section-text">Akses spreadsheet rekomendasi saham kami untuk detail lebih lanjut.</p>
-              <div class="spreadsheet-list" id="spreadsheet-links-list">
-                <p style="text-align: center; color: var(--light);">Link spreadsheet akan dimuat di sini.</p>
-              </div>
-            </div>
-
+          <div id="dashboard-content-area">
             <!-- Educational Videos Section -->
-            <div id="educational-videos-content" class="dashboard-content hidden">
+            <div id="educational-videos-content" class="dashboard-content active">
               <h3 class="section-subtitle">Video Edukasi</h3>
               <p class="section-text">Tonton video-video pilihan untuk meningkatkan pemahaman investasi Anda.</p>
               <div class="video-grid" id="educational-videos-list">
@@ -192,6 +255,14 @@
               </div>
             </div>
 
+            <!-- Spreadsheet Links Section -->
+            <div id="spreadsheet-links-content" class="dashboard-content hidden">
+              <h3 class="section-subtitle">Link Spreadsheet Rekomendasi</h3>
+              <p class="section-text">Akses spreadsheet rekomendasi saham kami untuk detail lebih lanjut.</p>
+              <div class="spreadsheet-list" id="spreadsheet-links-list">
+                <p style="text-align: center; color: var(--light);">Link spreadsheet akan dimuat di sini.</p>
+              </div>
+            </div>
 
             <!-- Articles Section -->
             <div id="articles-content" class="dashboard-content hidden">
@@ -212,8 +283,8 @@
         <h3 class="section-title" id="social-media-title">Ikuti Kami di Media Sosial</h3>
         <p class="section-text">Dapatkan informasi terbaru dan tips menarik tentang investasi saham!</p>
         <div style="display: flex; justify-content: center; gap: 20px;">
-          <a href="https://www.instagram.com/kertai.academy/" class="btn btn-primary" style="flex: 1; max-width: 150px;">Instagram</a>
-          <a href="https://www.tiktok.com/@kertai.academy" class="btn btn-primary" style="flex: 1; max-width: 150px;">TikTok</a>
+          <a href="https://www.instagram.com/kertai.academy/" target="_blank" class="btn btn-primary" style="flex: 1; max-width: 150px;">Instagram</a>
+          <a href="https://www.tiktok.com/@kertai.academy" target="_blank" class="btn btn-primary" style="flex: 1; max-width: 150px;">TikTok</a>
         </div>
       </div>
     </section>
@@ -264,7 +335,7 @@
     </div>
   </div>
 
-  <!-- Custom Confirmation Modal (for delete actions) -->
+  <!-- Custom Confirmation Modal (for delete actions - not used for testimonials) -->
   <div id="confirm-modal" class="modal">
     <div class="modal-content">
       <h3 id="confirm-modal-title">Konfirmasi</h3>
