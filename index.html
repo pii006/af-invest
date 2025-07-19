@@ -79,7 +79,7 @@
           <div class="service-options" id="service-options" role="list">
             
             <!-- New Priority Group Card -->
-            <div class="service-card priority-group-card" role="listitem" tabindex="0" aria-label="Grup Diskusi Prioritas Batch Terakhir">
+            <div class="service-card priority-group-card" role="listitem" tabindex="0" aria-label="Grup Diskusi Prioritas">
               <h4>Grup Diskusi Prioritas</h4>
               <p>Dalami ekonomi global, fundamental, teknikal, dan market update secara terarah dengan mentor berpengalaman. Slot terbatas!</p>
               <div class="service-details">
@@ -109,7 +109,7 @@
               <p>Insight terkini tentang tren pasar, sektor potensial, dan berita ekonomi yang berpengaruh.</p>
               <div class="service-details">Ringkasan pasar yang komprehensif untuk membantu Anda tetap terinformasi dan siap mengambil keputusan.</div>
             </div>
-                     <div class="service-card" data-service="education" role="listitem" tabindex="0" aria-label="Edukasi Investasi">
+            <div class="service-card" data-service="education" role="listitem" tabindex="0" aria-label="Edukasi Investasi">
               <h4>Edukasi Investasi</h4>
               <p>Akses modul pembelajaran dan tutorial tentang dasar-dasar investasi saham.</p>
               <div class="service-details">Materi edukasi dirancang untuk pemula hingga investor menengah, mencakup berbagai topik penting.</div>
@@ -126,7 +126,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section>  
 
       <section class="why-us" id="mengapa" aria-labelledby="why-us-title">
         <div class="container">
@@ -136,8 +136,6 @@
           </p>
         </div>
       </section>
-
-      
 
       <section class="contact" id="kontak" aria-labelledby="contact-title">
         <div class="container">
@@ -152,52 +150,67 @@
       <!-- Member Dashboard Section (Hidden by default) -->
       <section class="dashboard-section hidden" id="dashboard-section" aria-labelledby="dashboard-title">
         <div class="container">
-          <h3 class="section-title" id="dashboard-title">Rekomendasi Saham</h3>
+          <h3 class="section-title" id="dashboard-title">Dashboard Member</h3>
           <p class="section-text" id="dashboard-welcome-message">Selamat datang, Member!</p>
 
-          <div class="message-box" id="dashboard-message"></div>
+          <!-- Dashboard Navigation -->
+          <nav class="dashboard-nav">
+            <ul class="dashboard-nav-list">
+              <li><a href="#" class="dashboard-nav-link active" data-content="stock-picks">Rekomendasi Saham</a></li>
+              <li><a href="#" class="dashboard-nav-link" data-content="educational-videos">Edukasi Video</a></li>
+              <li><a href="#" class="dashboard-nav-link" data-content="educational-pdfs">Edukasi PDF</a></li>
+              <li><a href="#" class="dashboard-nav-link" data-content="spreadsheet-links">Link Spreadsheet</a></li>
+              <li><a href="#" class="dashboard-nav-link" data-content="articles">Artikel Edukasi</a></li>
+            </ul>
+          </nav>
 
-          <!-- Stock Picks Display -->
-          <div class="stock-picks-grid" id="stock-picks-list">
-            <!-- Stock picks will be loaded here -->
-            <p style="text-align: center; color: var(--light);">Memuat rekomendasi saham...</p>
-          </div>
+          <!-- Content Areas for each section -->
+          <div id="dashboard-content-area">
+            <!-- Stock Picks Section -->
+            <div id="stock-picks-content" class="dashboard-content active">
+              <div class="message-box" id="dashboard-message"></div>
+              <div class="stock-picks-grid" id="stock-picks-list">
+                <p style="text-align: center; color: var(--light);">Memuat rekomendasi saham...</p>
+              </div>
+            </div>
 
-          <h3 class="section-title" style="margin-top: 80px;">Tambah Rekomendasi Saham Baru</h3>
-          <!-- Add Stock Pick Form -->
-          <form id="add-stock-pick-form" class="add-stock-pick-form">
-            <div class="message-box" id="add-stock-pick-message"></div>
-            <div class="form-group">
-              <label for="ticker">Ticker Saham:</label>
-              <input type="text" id="ticker" required placeholder="Contoh: BBCA" />
+            <!-- Educational Videos Section -->
+            <div id="educational-videos-content" class="dashboard-content hidden">
+              <h3 class="section-subtitle">Video Edukasi</h3>
+              <p class="section-text">Tonton video-video pilihan untuk meningkatkan pemahaman investasi Anda.</p>
+              <div class="video-grid" id="educational-videos-list">
+                <p style="text-align: center; color: var(--light);">Video edukasi akan dimuat di sini.</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="entryPrice">Harga Masuk:</label>
-              <input type="number" id="entryPrice" required placeholder="Contoh: 30000" />
+
+            <!-- Educational PDFs Section -->
+            <div id="educational-pdfs-content" class="dashboard-content hidden">
+              <h3 class="section-subtitle">Materi PDF Edukasi</h3>
+              <p class="section-text">Unduh materi PDF untuk belajar kapan saja, di mana saja.</p>
+              <div class="pdf-list" id="educational-pdfs-list">
+                <p style="text-align: center; color: var(--light);">Materi PDF akan dimuat di sini.</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="targetPrice">Harga Target (Opsional):</label>
-              <input type="number" id="targetPrice" placeholder="Contoh: 32000" />
+
+            <!-- Spreadsheet Links Section -->
+            <div id="spreadsheet-links-content" class="dashboard-content hidden">
+              <h3 class="section-subtitle">Link Spreadsheet Rekomendasi</h3>
+              <p class="section-text">Akses spreadsheet rekomendasi saham kami untuk detail lebih lanjut.</p>
+              <div class="spreadsheet-list" id="spreadsheet-links-list">
+                <p style="text-align: center; color: var(--light);">Link spreadsheet akan dimuat di sini.</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="stopLoss">Stop Loss (Opsional):</label>
-              <input type="number" id="stopLoss" placeholder="Contoh: 29000" />
+
+            <!-- Articles Section -->
+            <div id="articles-content" class="dashboard-content hidden">
+              <h3 class="section-subtitle">Artikel Edukasi</h3>
+              <p class="section-text">Baca artikel-artikel terbaru kami untuk insight pasar yang mendalam.</p>
+              <div class="article-list" id="articles-list">
+                <p style="text-align: center; color: var(--light);">Artikel edukasi akan dimuat di sini.</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="analysis">Analisis:</label>
-              <textarea id="analysis" required placeholder="Alasan di balik rekomendasi ini..."></textarea>
-            </div>
-            <div class="form-group">
-                <label for="status">Status:</label>
-                <select id="status" required>
-                    <option value="Active">Active</option>
-                    <option value="TP Achieved">TP Achieved</option>
-                    <option value="SL Hit">SL Hit</option>
-                    <option value="Cancelled">Cancelled</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Tambah Rekomendasi</button>
-          </form>
+
+          </div> <!-- End dashboard-content-area -->
         </div>
       </section>
 
@@ -256,6 +269,18 @@
           <a href="#" class="toggle-form-link" data-form="login">Sudah punya akun? Login di sini.</a>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Custom Confirmation Modal (for delete actions) -->
+  <div id="confirm-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="confirm-modal-title">Konfirmasi</h3>
+      <p id="confirm-modal-message" style="text-align: center; margin-bottom: 25px; color: var(--light);">Apakah Anda yakin ingin melakukan tindakan ini?</p>
+      <div class="form-actions" style="justify-content: center;">
+        <button class="btn btn-danger" id="confirm-no-btn">Tidak</button>
+        <button class="btn btn-primary" id="confirm-yes-btn">Ya</button>
+      </div>
     </div>
   </div>
 
