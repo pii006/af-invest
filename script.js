@@ -180,8 +180,8 @@ async function fetchSpreadsheetLinks() {
     setTimeout(() => {
         spreadsheetsList.innerHTML = `
             <div class="spreadsheet-item">
-                <h4>Rekomendasi Swing Trade (Januari 2025)</h4>
-                <p>Spreadsheet ini berisi rekomendasi saham untuk swing trade di bulan Januari.</p>
+                <h4>Rekomendasi Saham Update</h4>
+                <p>Spreadsheet ini berisi stockpick rekomendasi saham.</p>
                 <a href="https://docs.google.com/spreadsheets/d/someid1" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
             </div>
             <div class="spreadsheet-item">
