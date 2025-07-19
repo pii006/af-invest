@@ -61,64 +61,6 @@ async function authenticateUser(endpoint, phoneNumber, password) {
     }
 }
 
-// Function to fetch stock picks
-async function fetchStockPicks() {
-    const token = localStorage.getItem('token');
-    const stockPicksList = document.getElementById('stock-picks-list');
-    if (!stockPicksList) {
-        console.error('Element with ID "stock-picks-list" not found.');
-        return;
-    }
-    stockPicksList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat rekomendasi saham...</p>'; // Loading message
-
-    if (!token) {
-        stockPicksList.innerHTML = '<p style="text-align: center; color: var(--light);">Silakan login untuk melihat rekomendasi saham.</p>';
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/stockpicks`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            if (data.length === 0) {
-                stockPicksList.innerHTML = '<p style="text-align: center; color: var(--light);">Belum ada rekomendasi saham saat ini.</p>';
-            } else {
-                stockPicksList.innerHTML = ''; // Clear loading message
-                data.forEach(pick => {
-                    const pickCard = document.createElement('div');
-                    pickCard.className = 'stock-pick-card';
-                    pickCard.innerHTML = `
-                        <h4>${pick.ticker}</h4>
-                        <p><strong>Harga Masuk:</strong> Rp ${pick.entryPrice.toLocaleString('id-ID')}</p>
-                        ${pick.targetPrice ? `<p><strong>Harga Target:</strong> Rp ${pick.targetPrice.toLocaleString('id-ID')}</p>` : ''}
-                        ${pick.stopLoss ? `<p><strong>Stop Loss:</strong> Rp ${pick.stopLoss.toLocaleString('id-ID')}</p>` : ''}
-                        <p><strong>Analisis:</strong> ${pick.analysis}</p>
-                        <p><strong>Tanggal Rekomendasi:</strong> ${new Date(pick.recommendationDate).toLocaleDateString('id-ID')}</p>
-                        <p><strong>Status:</strong> <span class="status">${pick.status}</span></p>
-                    `;
-                    stockPicksList.appendChild(pickCard);
-                });
-            }
-        } else {
-            showMessage('dashboard-message', data.message || 'Gagal memuat rekomendasi saham.', 'error');
-            stockPicksList.innerHTML = '<p style="text-align: center; color: var(--error);">Gagal memuat rekomendasi saham. Silakan coba lagi.</p>';
-            if (response.status === 401) { // Unauthorized, token might be invalid/expired
-                updateUIForAuth(false); // Log out user
-            }
-        }
-    } catch (error) {
-        console.error('Error fetching stock picks:', error);
-        showMessage('dashboard-message', 'Terjadi kesalahan jaringan saat memuat rekomendasi.', 'error');
-        stockPicksList.innerHTML = '<p style="text-align: center; color: var(--error);">Terjadi kesalahan jaringan saat memuat rekomendasi.</p>';
-    }
-}
 
 // Function to update UI based on authentication status
 function updateUIForAuth(isLoggedIn) {
