@@ -1,7 +1,7 @@
 // script.js
 
 // Base URL for your backend API
-const API_BASE_URL = 'http://localhost:3000/api'; // Sesuaikan jika backend Anda di-deploy ke URL lain
+const API_BASE_URL = 'https://af-invest-backend-api-anda-81bb04a352e2.herokuapp.com'; // Sesuaikan jika backend Anda di-deploy ke URL lain
 
 // Helper function to show messages
 function showMessage(elementId, message, type) {
@@ -306,3 +306,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add Stock Pick Form Submission
     document.getElementById('add-stock-pick-form').addEventListener('submit', addStockPick);
 });
+const corsOptions = {
+  origin: 'https://pii006.github.io/af-invest-frontend/', // Ini HARUS URL GitHub Pages frontend Anda
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+app.use(cors(corsOptions));
