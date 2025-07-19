@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AF Invest</title>
+  <!-- Link ke file CSS eksternal -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Link ke Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Website Content -->
+  <div class="content-wrapper" id="content-wrapper">
+    <header class="header" role="banner">
+      <div class="header-container">
+        <a href="#" class="logo" aria-label="AF Invest">
+  
+    <!-- Logo Container -->
+
+        <div class="logo-header-wrapper">
+          <img src="d:\af-invest-frontend\assets\AFINVESTLOGO.jpg" alt="AF Invest Logo" class="header-logo">
+          <a href="#" class="logo" aria-label="AF Invest">
+         AF<span class="highlight">Invest</span>
+          </a>
+        </div>
+
+        </a>
+        <nav class="nav" role="navigation" aria-label="Menu navigasi utama">
+          <ul class="nav-list" id="nav-list">
+            <li class="nav-item"><a href="#tentang" class="nav-link">Tentang AF Invest</a></li>
+            <li class="nav-item"><a href="#layanan" class="nav-link">Layanan</a></li>
+            <li class="nav-item"><a href="#mengapa" class="nav-link">Mengapa Kami?</a></li>
+            <li class="nav-item"><a href="#kontak" class="nav-link">Kontak</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" id="auth-link">Login / Register</a></li>
+            <li class="nav-item"><a href="#" class="nav-link hidden" id="logout-link">Logout</a></li>
+          </ul>
+        </nav>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Buka tutup menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="hero" aria-label="Bagian utama">
+        <div class="container hero-content">
+          <h2 class="hero-title">Learn More, Earn More<span class="highlight"></span></h2>
+          <p class="hero-subtitle">
+            Belajar bersama dan tingkatkan potensi keuntungan Anda di pasar saham dengan AF Invest. Kami menyediakan analisis pasar, rekomendasi saham, dan edukasi investasi yang komprehensif.
+          </p>
+          <a href="#layanan" class="btn btn-primary" id="hero-btn">Lihat Layanan</a>
+        </div>
+      </section>
+
+      <section class="about" id="tentang" aria-labelledby="about-title">
+        <div class="container">
+          <h3 class="section-title" id="about-title">Tentang AF Invest</h3>
+          <p class="section-text">
+            AF Invest adalah platform komunitas yang didedikasikan untuk membantu Anda memahami dunia investasi saham. Kami menyediakan analisis pasar, rekomendasi saham, dan panduan edukasi untuk membantu Anda membuat keputusan investasi yang lebih cerdas. Baik Anda seorang pemula atau investor berpengalaman, kami hadir untuk mendukung perjalanan finansial Anda.
+          </p>
+          <div class="about-cards">
+            <article class="card" aria-label="Analisis Fundamental">
+              <h4>Analisis Fundamental</h4>
+              <p>Pelajari cara mengevaluasi kesehatan finansial perusahaan untuk investasi jangka panjang.</p>
+            </article>
+            <article class="card" aria-label="Analisis Teknikal">
+              <h4>Analisis Teknikal</h4>
+              <p>Pahami pola grafik dan indikator untuk memprediksi pergerakan harga saham jangka pendek.</p>
+            </article>
+            <article class="card" aria-label="Manajemen Risiko">
+              <h4>Manajemen Risiko</h4>
+              <p>Strategi penting untuk melindungi modal Anda dan meminimalkan kerugian dalam trading.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="services" id="layanan" aria-labelledby="services-title">
+        <div class="container">
+          <h3 class="section-title" id="services-title">Layanan Kami</h3>
+          <p><strong>Klik untuk lebih detail </strong></p>
+          <div class="service-options" id="service-options" role="list">
+            
+            <!-- New Priority Group Card -->
+            <div class="service-card priority-group-card" role="listitem" tabindex="0" aria-label="Grup Diskusi Prioritas Batch Terakhir">
+              <h4>Grup Diskusi Prioritas <span style="color: var(--error);"></span></h4>
+              <p>Dalami ekonomi global, fundamental, teknikal, dan market update secara terarah dengan mentor berpengalaman. Slot terbatas!</p>
+              <div class="service-details">
+                
+                <p><strong>Biaya Investasi:</strong> Rp. 350K/orang (Lifetime Access)</p>
+                <p><strong>Fasilitas:</strong></p>
+                <ul>
+                  <li>Signal Intraday dan Swing Trade</li>
+                  <li>Request analisis mendalam (sesuai kebutuhan)</li>
+                  <li>Diskusi bebas topik: Fundamental, Teknikal, Sentimen, Makroekonomi</li>
+                  <li>Insight premium & early warning</li>
+                  <li>Konsultasi terbatas secara personal</li>
+                  <li>Network & komunitas aktif</li>
+                </ul>
+                <p style="margin-top: 15px; font-weight: bold;"> <a href="https://wa.me/6285711152401" ></a></p>
+                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">*Tidak ada paksaan untuk bergabung. Informasi & analisis teknikal terbatas tetap dibagikan di grup umum.</p>
+              </div>
+              <a href="https://wa.me/6285711152401" class="btn btn-primary" style="margin-top: 20px;">Daftar Sekarang!</a>
+            </div>
+
+            <div class="service-card" data-service="stock-recommendations" role="listitem" tabindex="0" aria-label="Rekomendasi Saham Harian">
+              <h4>Rekomendasi Saham Harian</h4>
+              <p>Dapatkan rekomendasi saham pilihan dengan analisis mendalam dan target harga.</p>
+              <div class="service-details">Rekomendasi disajikan berdasarkan analisis fundamental dan teknikal, cocok untuk berbagai gaya investasi.</div>
+            </div>
+            <div class="service-card" data-service="market-analysis" role="listitem" tabindex="0" aria-label="Analisis Pasar Mingguan">
+              <h4>Analisis Pasar Mingguan</h4>
+              <p>Insight terkini tentang tren pasar, sektor potensial, dan berita ekonomi yang berpengaruh.</p>
+              <div class="service-details">Ringkasan pasar yang komprehensif untuk membantu Anda tetap terinformasi dan siap mengambil keputusan.</div>
+            </div>
+            <div class="service-card" data-service="education" role="listitem" tabindex="0" aria-label="Edukasi Investasi">
+              <h4>Edukasi Investasi</h4>
+              <p>Akses modul pembelajaran dan tutorial tentang dasar-dasar investasi saham.</p>
+              <div class="service-details">Materi edukasi dirancang untuk pemula hingga investor menengah, mencakup berbagai topik penting.</div>
+            </div>
+            <div class="service-card" data-service="portfolio-review" role="listitem" tabindex="0" aria-label="Review Portofolio (Premium)">
+              <h4>Review Portofolio (Premium)</h4>
+              <p>Dapatkan evaluasi dan saran personal untuk portofolio investasi Anda dari ahli kami.</p>
+              <div class="service-details">Layanan eksklusif untuk member prioritas, membantu mengoptimalkan strategi investasi Anda.</div>
+            </div>
+            <div class="service-card" data-service="community" role="listitem" tabindex="0" aria-label="Komunitas Investor">
+              <h4>Komunitas Investor</h4>
+              <p>Gabung grup diskusi aktif untuk berbagi ide, pengalaman, dan belajar dari sesama investor.</p>
+              <div class="service-details">Lingkungan suportif untuk bertukar pikiran dan mendapatkan perspektif baru tentang pasar saham.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="why-us" id="mengapa" aria-labelledby="why-us-title">
+        <div class="container">
+          <h3 class="section-title" id="why-us-title">Mengapa Bergabung dengan AF Invest?</h3>
+          <p class="section-text">
+            Kami menyediakan informasi yang akurat dan terpercaya, didukung oleh analis berpengalaman. Dengan fokus pada edukasi dan komunitas, kami berkomitmen untuk memberdayakan Anda agar dapat meraih kesuksesan di pasar saham. Bergabunglah dengan kami dan tingkatkan potensi keuntungan Anda!
+          </p>
+        </div>
+      </section>
+
+      <section class="contact" id="kontak" aria-labelledby="contact-title">
+        <div class="container">
+          <h3 class="section-title" id="contact-title">Hubungi Kami</h3>
+          <p class="section-text">
+            Punya pertanyaan tentang investasi saham atau ingin tahu lebih banyak tentang layanan kami? Jangan ragu untuk menghubungi Admin AF Invest.
+          </p>
+          <a href="https://wa.me/6285711152401" class="btn btn-primary">Chat via WhatsApp</a>
+        </div>
+      </section>
+
+      <!-- Member Dashboard Section (Hidden by default) -->
+      <section class="dashboard-section hidden" id="dashboard-section" aria-labelledby="dashboard-title">
+        <div class="container">
+          <h3 class="section-title" id="dashboard-title">Rekomendasi Saham</h3>
+          <p class="section-text" id="dashboard-welcome-message">Selamat datang, Member!</p>
+
+          <div class="message-box" id="dashboard-message"></div>
+
+          <!-- Stock Picks Display -->
+          <div class="stock-picks-grid" id="stock-picks-list">
+            <!-- Stock picks will be loaded here -->
+            <p style="text-align: center; color: var(--light);">Memuat rekomendasi saham...</p>
+          </div>
+
+          <h3 class="section-title" style="margin-top: 80px;">Tambah Rekomendasi Saham Baru</h3>
+          <!-- Add Stock Pick Form -->
+          <form id="add-stock-pick-form" class="add-stock-pick-form">
+            <div class="message-box" id="add-stock-pick-message"></div>
+            <div class="form-group">
+              <label for="ticker">Ticker Saham:</label>
+              <input type="text" id="ticker" required placeholder="Contoh: BBCA" />
+            </div>
+            <div class="form-group">
+              <label for="entryPrice">Harga Masuk:</label>
+              <input type="number" id="entryPrice" required placeholder="Contoh: 30000" />
+            </div>
+            <div class="form-group">
+              <label for="targetPrice">Harga Target (Opsional):</label>
+              <input type="number" id="targetPrice" placeholder="Contoh: 32000" />
+            </div>
+            <div class="form-group">
+              <label for="stopLoss">Stop Loss (Opsional):</label>
+              <input type="number" id="stopLoss" placeholder="Contoh: 29000" />
+            </div>
+            <div class="form-group">
+              <label for="analysis">Analisis:</label>
+              <textarea id="analysis" required placeholder="Alasan di balik rekomendasi ini..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" required>
+                    <option value="Active">Active</option>
+                    <option value="TP Achieved">TP Achieved</option>
+                    <option value="SL Hit">SL Hit</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Tambah Rekomendasi</button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+    <section class="social-media" id="social-media" aria-labelledby="social-media-title" style="text-align: center;">
+      <div class="container">
+        <h3 class="section-title" id="social-media-title">Ikuti Kami di Media Sosial</h3>
+        <p class="section-text">Dapatkan informasi terbaru dan tips menarik tentang investasi saham!</p>
+        <div style="display: flex; justify-content: center; gap: 20px;"></div>
+          <a href="https://www.instagram.com/kertai.academy/" class="btn btn-primary" style="flex: 1; max-width: 150px;">Instagram</a>
+          <a href="https://www.tiktok.com/@kertai.academy" class="btn btn-primary" style="flex: 1; max-width: 150px;">TikTok</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 AF Invest Community. Semua hak dilindungi</p>
+    </footer>
+  </div>
+
+  <!-- Login/Register Modal -->
+  <div id="auth-modal" class="modal">
+    <div class="modal-content">
+      <!-- Tombol close 'X' dihapus -->
+      <h3 id="auth-modal-title">Login</h3>
+      <div class="message-box" id="auth-message"></div>
+
+      <!-- Login Form -->
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-phoneNumber">Nomor Telepon:</label>
+          <input type="text" id="login-phoneNumber" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password:</label>
+          <input type="password" id="login-password" required />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Login</button>
+          <a href="https://forms.gle/F4VFK17aPbiPZg9j9" class="toggle-form-link" data-form="register">Belum punya akun? Daftar di sini.</a>
+        
+        </div>
+      </form>
+
+      <!-- Register Form (Hidden by default) -->
+      <form id="register-form" class="hidden">
+        <div class="form-group">
+          <label for="register-phoneNumber">Nomor Telepon:</label>
+          <input type="text" id="register-phoneNumber" required />
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password:</label>
+          <input type="password" id="register-password" required />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Daftar</button>
+          <a href="#" class="toggle-form-link" data-form="login">Sudah punya akun? Login di sini.</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Link ke file JavaScript eksternal -->
+  <script src="script.js"></script>
+</body>
+</html>
