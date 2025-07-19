@@ -39,7 +39,8 @@ async function authenticateUser(endpoint, phoneNumber, password) {
                     const authModal = document.getElementById('auth-modal');
                     if (authModal) authModal.style.display = 'none';
                     updateUIForAuth(true); // Update UI to logged-in state
-                    fetchStockPicks(); // Load stock picks after login
+                    // Setelah login, secara default tampilkan Rekomendasi Saham
+                    showDashboardContent('stock-picks');
                 }, 1000);
             } else { // register-manual-user
                 showMessage('auth-message', data.message, 'success');
@@ -119,54 +120,6 @@ async function fetchStockPicks() {
     }
 }
 
-// Function to add a new stock pick
-async function addStockPick(event) {
-    event.preventDefault();
-    const token = localStorage.getItem('token');
-    if (!token) {
-        showMessage('add-stock-pick-message', 'Anda harus login untuk menambahkan rekomendasi.', 'error');
-        return;
-    }
-
-    const ticker = document.getElementById('ticker')?.value;
-    const entryPrice = parseFloat(document.getElementById('entryPrice')?.value);
-    const targetPrice = document.getElementById('targetPrice')?.value ? parseFloat(document.getElementById('targetPrice')?.value) : undefined;
-    const stopLoss = document.getElementById('stopLoss')?.value ? parseFloat(document.getElementById('stopLoss')?.value) : undefined;
-    const analysis = document.getElementById('analysis')?.value;
-    const status = document.getElementById('status')?.value;
-
-    // Perbaikan di sini: Mengubah !!status menjadi !status
-    if (!ticker || !entryPrice || !analysis || !status) {
-        showMessage('add-stock-pick-message', 'Mohon lengkapi semua bidang wajib.', 'error');
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/stockpicks`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ ticker, entryPrice, targetPrice, stopLoss, analysis, status })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            showMessage('add-stock-pick-message', data.message, 'success');
-            const addStockPickForm = document.getElementById('add-stock-pick-form');
-            if (addStockPickForm) addStockPickForm.reset(); // Clear form
-            fetchStockPicks(); // Refresh the list
-        } else {
-            showMessage('add-stock-pick-message', data.message || 'Gagal menambahkan rekomendasi.', 'error');
-        }
-    } catch (error) {
-        console.error('Error adding stock pick:', error);
-        showMessage('add-stock-pick-message', 'Terjadi kesalahan jaringan saat menambahkan rekomendasi.', 'error');
-    }
-}
-
 // Function to update UI based on authentication status
 function updateUIForAuth(isLoggedIn) {
     const authLink = document.getElementById('auth-link');
@@ -195,8 +148,139 @@ function updateUIForAuth(isLoggedIn) {
     }
 }
 
+// Function to show specific dashboard content
+function showDashboardContent(contentType) {
+    // Hide all content sections
+    document.querySelectorAll('.dashboard-content').forEach(section => {
+        section.classList.add('hidden');
+    });
+    // Remove active class from all nav links
+    document.querySelectorAll('.dashboard-nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+
+    // Show the selected content section and set active nav link
+    const selectedContent = document.getElementById(`${contentType}-content`);
+    const selectedNavLink = document.querySelector(`.dashboard-nav-link[data-content="${contentType}"]`);
+
+    if (selectedContent) selectedContent.classList.remove('hidden');
+    if (selectedNavLink) selectedNavLink.classList.add('active');
+
+    // Fetch data for the selected content type
+    switch (contentType) {
+        case 'stock-picks':
+            fetchStockPicks();
+            break;
+        case 'educational-videos':
+            fetchEducationalVideos();
+            break;
+        case 'educational-pdfs':
+            fetchPdfMaterials();
+            break;
+        case 'spreadsheet-links':
+            fetchSpreadsheetLinks();
+            break;
+        case 'articles':
+            fetchArticles();
+            break;
+        default:
+            console.warn('Unknown content type:', contentType);
+    }
+}
+
+// Placeholder functions for new content types (akan diisi nanti)
+async function fetchEducationalVideos() {
+    const videosList = document.getElementById('educational-videos-list');
+    if (!videosList) return;
+    videosList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat video edukasi...</p>';
+    // TODO: Implement actual fetch from backend API for videos
+    // For now, mock data:
+    setTimeout(() => {
+        videosList.innerHTML = `
+            <div class="video-card">
+                <h4>Pengenalan Pasar Saham</h4>
+                <p>Video ini menjelaskan dasar-dasar pasar saham untuk pemula.</p>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn btn-primary">Tonton Video</a>
+            </div>
+            <div class="video-card">
+                <h4>Strategi Investasi Jangka Panjang</h4>
+                <p>Pelajari strategi efektif untuk investasi saham jangka panjang.</p>
+                <a href="https://www.youtube.com/watch?v=someothervideo" target="_blank" class="btn btn-primary">Tonton Video</a>
+            </div>
+        `;
+    }, 1000);
+}
+
+async function fetchPdfMaterials() {
+    const pdfsList = document.getElementById('educational-pdfs-list');
+    if (!pdfsList) return;
+    pdfsList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat materi PDF...</p>';
+    // TODO: Implement actual fetch from backend API for PDFs
+    // For now, mock data:
+    setTimeout(() => {
+        pdfsList.innerHTML = `
+            <div class="pdf-item">
+                <h4>Panduan Analisis Fundamental</h4>
+                <p>Unduh panduan lengkap analisis fundamental saham.</p>
+                <a href="https://example.com/panduan_fundamental.pdf" target="_blank" class="btn btn-primary">Unduh PDF</a>
+            </div>
+            <div class="pdf-item">
+                <h4>Glosarium Istilah Saham</h4>
+                <p>Daftar lengkap istilah-istilah penting dalam dunia saham.</p>
+                <a href="https://example.com/glosarium_saham.pdf" target="_blank" class="btn btn-primary">Unduh PDF</a>
+            </div>
+        `;
+    }, 1000);
+}
+
+async function fetchSpreadsheetLinks() {
+    const spreadsheetsList = document.getElementById('spreadsheet-links-list');
+    if (!spreadsheetsList) return;
+    spreadsheetsList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat link spreadsheet...</p>';
+    // TODO: Implement actual fetch from backend API for spreadsheets
+    // For now, mock data:
+    setTimeout(() => {
+        spreadsheetsList.innerHTML = `
+            <div class="spreadsheet-item">
+                <h4>Rekomendasi Swing Trade (Januari 2025)</h4>
+                <p>Spreadsheet ini berisi rekomendasi saham untuk swing trade di bulan Januari.</p>
+                <a href="https://docs.google.com/spreadsheets/d/someid1" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
+            </div>
+            <div class="spreadsheet-item">
+                <h4>Daftar Saham Dividen</h4>
+                <p>Daftar saham dengan riwayat dividen yang menarik.</p>
+                <a href="https://docs.google.com/spreadsheets/d/someid2" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
+            </div>
+        `;
+    }, 1000);
+}
+
+async function fetchArticles() {
+    const articlesList = document.getElementById('articles-list');
+    if (!articlesList) return;
+    articlesList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat artikel edukasi...</p>';
+    // TODO: Implement actual fetch from backend API for articles
+    // For now, mock data:
+    setTimeout(() => {
+        articlesList.innerHTML = `
+            <div class="article-item">
+                <h4>Memahami Laporan Keuangan Perusahaan</h4>
+                <p>Artikel mendalam tentang cara membaca dan menganalisis laporan keuangan.</p>
+                <a href="#" class="btn btn-primary">Baca Artikel</a>
+            </div>
+            <div class="article-item">
+                <h4>Psikologi Trading: Mengendalikan Emosi di Pasar</h4>
+                <p>Tips dan trik untuk mengelola emosi saat melakukan trading saham.</p>
+                <a href="#" class="btn btn-primary">Baca Artikel</a>
+            </div>
+        `;
+    }, 1000);
+}
+
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
+    // Content wrapper should be visible by default as loading screen is removed
     const contentWrapper = document.getElementById('content-wrapper');
     if (contentWrapper) contentWrapper.classList.add('content-visible');
     
@@ -204,7 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
     if (token) {
         updateUIForAuth(true);
-        fetchStockPicks();
+        // Default to showing stock picks on login/load
+        showDashboardContent('stock-picks');
     } else {
         updateUIForAuth(false);
     }
@@ -239,84 +324,83 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auth Modal Logic
     const authModal = document.getElementById('auth-modal');
     const authLink = document.getElementById('auth-link');
-    const closeButton = authModal ? authModal.querySelector('.close-button') : null; // Pengecekan null
+    const closeButton = authModal ? authModal.querySelector('.close-button') : null; // Cek keberadaan closeButton
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
     const authModalTitle = document.getElementById('auth-modal-title');
     const toggleFormLinks = document.querySelectorAll('.toggle-form-link');
     const logoutLink = document.getElementById('logout-link');
 
-    if (authLink) {
+    if (authLink) { // Pastikan authLink ada
         authLink.addEventListener('click', (e) => {
             e.preventDefault();
-            if (authModal) authModal.style.display = 'flex';
-            if (loginForm) loginForm.classList.remove('hidden');
-            if (registerForm) registerForm.classList.add('hidden');
-            if (authModalTitle) authModalTitle.textContent = 'Login';
-            showMessage('auth-message', '', 'hidden'); // Clear previous messages
+            authModal.style.display = 'flex'; // Use flex to center
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+            authModalTitle.textContent = 'Login';
+            document.getElementById('auth-message').style.display = 'none'; // Clear previous messages
         });
     }
 
-    if (closeButton) { // Tambahkan pengecekan null di sini
+    if (closeButton) { // Pastikan closeButton ada sebelum menambahkan event listener
         closeButton.addEventListener('click', () => {
-            if (authModal) authModal.style.display = 'none';
+            authModal.style.display = 'none';
         });
     }
 
-    if (authModal) { // Pastikan modal ada sebelum menambahkan event listener window
-        window.addEventListener('click', (e) => {
-            if (e.target === authModal) {
-                authModal.style.display = 'none';
-            }
-        });
-    }
+    window.addEventListener('click', (e) => {
+        if (e.target === authModal) {
+            authModal.style.display = 'none';
+        }
+    });
 
     toggleFormLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             if (e.target.dataset.form === 'register') {
-                if (loginForm) loginForm.classList.add('hidden');
-                if (registerForm) registerForm.classList.remove('hidden');
-                if (authModalTitle) authModalTitle.textContent = 'Daftar';
-            } else { // Jika ingin login
-                if (loginForm) loginForm.classList.remove('hidden');
-                if (registerForm) registerForm.classList.add('hidden');
-                if (authModalTitle) authModalTitle.textContent = 'Login';
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                authModalTitle.textContent = 'Daftar';
+            } else {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                authModalTitle.textContent = 'Login';
             }
             showMessage('auth-message', '', 'hidden'); // Clear messages on form toggle
         });
     });
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const phoneNumber = document.getElementById('login-phoneNumber')?.value;
-            const password = document.getElementById('login-password')?.value;
-            await authenticateUser('login', phoneNumber, password);
-        });
-    }
+    // Login Form Submission
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const phoneNumber = document.getElementById('login-phoneNumber').value;
+        const password = document.getElementById('login-password').value;
+        await authenticateUser('login', phoneNumber, password);
+    });
 
-    if (registerForm) { // Pastikan registerForm ada
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const phoneNumber = document.getElementById('register-phoneNumber')?.value;
-            const password = document.getElementById('register-password')?.value;
-            await authenticateUser('register-manual-user', phoneNumber, password);
-        });
-    }
+    // Register Form Submission
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const phoneNumber = document.getElementById('register-phoneNumber').value;
+        const password = document.getElementById('register-password').value;
+        await authenticateUser('register-manual-user', phoneNumber, password);
+    });
 
-    if (logoutLink) {
-        logoutLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            updateUIForAuth(false); // Set UI to logged out state
-            showMessage('dashboard-message', 'Anda telah berhasil logout.', 'success');
-            const heroSection = document.getElementById('hero');
-            if (heroSection) heroSection.scrollIntoView({ behavior: 'smooth' });
-        });
-    }
+    // Logout Link
+    logoutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        updateUIForAuth(false); // Set UI to logged out state
+        showMessage('dashboard-message', 'Anda telah berhasil logout.', 'success');
+        // Optionally scroll to top or hero section
+        document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
+    });
 
-    const addStockPickForm = document.getElementById('add-stock-pick-form');
-    if (addStockPickForm) {
-        addStockPickForm.addEventListener('submit', addStockPick);
-    }
+    // Dashboard Navigation Event Listeners
+    document.querySelectorAll('.dashboard-nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const contentType = e.target.dataset.content;
+            showDashboardContent(contentType);
+        });
+    });
 });
