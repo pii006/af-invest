@@ -135,7 +135,8 @@ async function addStockPick(event) {
     const analysis = document.getElementById('analysis')?.value;
     const status = document.getElementById('status')?.value;
 
-    if (!ticker || !entryPrice || !analysis || !!status) { // Perbaikan di sini: !status menjadi !!status
+    // Perbaikan di sini: Mengubah !!status menjadi !status
+    if (!ticker || !entryPrice || !analysis || !status) {
         showMessage('add-stock-pick-message', 'Mohon lengkapi semua bidang wajib.', 'error');
         return;
     }
