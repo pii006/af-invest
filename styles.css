@@ -1,4 +1,4 @@
-/* style.css */
+/* styles.css */
 
 :root {
   --primary: #00f7ff;
@@ -269,6 +269,14 @@ section:nth-child(odd) {
   margin-bottom: 50px;
   position: relative;
   padding-bottom: 15px;
+}
+.section-subtitle { /* Added for dashboard content titles */
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    color: var(--primary);
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
 
 .section-title::after {
@@ -618,7 +626,9 @@ section:nth-child(odd) {
 }
 
 .form-group input[type="text"],
-.form-group input[type="password"] {
+.form-group input[type="password"],
+.form-group textarea,
+.form-group select { /* Added textarea and select */
     width: 100%;
     padding: 12px 15px;
     border: 1px solid rgba(0, 247, 255, 0.3);
@@ -630,7 +640,9 @@ section:nth-child(odd) {
 }
 
 .form-group input[type="text"]:focus,
-.form-group input[type="password"]:focus {
+.form-group input[type="password"]:focus,
+.form-group textarea:focus,
+.form-group select:focus { /* Added textarea and select */
     border-color: var(--primary);
     outline: none;
 }
@@ -695,30 +707,125 @@ section:nth-child(odd) {
     background: rgba(26, 26, 26, 0.7);
 }
 
-.stock-picks-grid {
+.dashboard-nav { /* Added for dashboard navigation */
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+}
+
+.dashboard-nav-list { /* Added for dashboard navigation */
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+    gap: 10px 20px; /* Row gap and column gap */
+}
+
+.dashboard-nav-link { /* Added for dashboard navigation */
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: var(--light);
+    font-weight: 500;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-nav-link::before { /* Added for dashboard navigation */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: bottom center;
+    transition: transform 0.3s ease;
+}
+
+.dashboard-nav-link:hover,
+.dashboard-nav-link.active { /* Added for dashboard navigation */
+    color: var(--primary);
+    background-color: rgba(44, 62, 80, 0.9);
+}
+
+.dashboard-nav-link.active::before { /* Added for dashboard navigation */
+    transform: scaleX(1);
+}
+
+.dashboard-content { /* Added for dashboard content sections */
+    margin-top: 40px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.stock-picks-grid,
+.video-grid,
+.pdf-list,
+.spreadsheet-list,
+.article-list { /* Updated for multiple content types */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
     margin-top: 40px;
 }
 
-.stock-pick-card {
+/* Specific grid adjustments for different content types */
+.video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Larger for videos */
+}
+
+.pdf-list, .spreadsheet-list, .article-list {
+    grid-template-columns: 1fr; /* List layout for these */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stock-pick-card,
+.video-card,
+.pdf-item,
+.spreadsheet-item,
+.article-item { /* Updated for multiple content types */
     background: rgba(44, 62, 80, 0.8);
     border: 1px solid rgba(0, 247, 255, 0.3);
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.stock-pick-card h4 {
+.stock-pick-card:hover,
+.video-card:hover,
+.pdf-item:hover,
+.spreadsheet-item:hover,
+.article-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    border-color: var(--secondary);
+}
+
+.stock-pick-card h4,
+.video-card h4,
+.pdf-item h4,
+.spreadsheet-item h4,
+.article-item h4 { /* Updated for multiple content types */
     font-family: 'Orbitron', sans-serif;
     font-size: 1.8rem;
     color: var(--primary);
     margin-bottom: 10px;
 }
 
-.stock-pick-card p {
+.stock-pick-card p,
+.video-card p,
+.pdf-item p,
+.spreadsheet-item p,
+.article-item p { /* Updated for multiple content types */
     font-size: 1rem;
     color: var(--light);
     margin-bottom: 8px;
@@ -729,45 +836,7 @@ section:nth-child(odd) {
     color: var(--primary);
 }
 
-.add-stock-pick-form {
-    background: rgba(44, 62, 80, 0.8);
-    border: 1px solid rgba(0, 247, 255, 0.3);
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
-    margin: 50px auto 0;
-}
-
-.add-stock-pick-form .form-group input,
-.add-stock-pick-form .form-group textarea,
-.add-stock-pick-form .form-group select {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid rgba(0, 247, 255, 0.3);
-    border-radius: 8px;
-    background-color: rgba(26, 26, 26, 0.7);
-    color: #fff;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.add-stock-pick-form .form-group input:focus,
-.add-stock-pick-form .form-group textarea:focus,
-.add-stock-pick-form .form-group select:focus {
-    border-color: var(--primary);
-    outline: none;
-}
-
-.add-stock-pick-form textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.add-stock-pick-form .btn-primary {
-    width: 100%;
-    margin-top: 20px;
-}
+/* Removed .add-stock-pick-form and its related styles */
 
 /* Hide default sections when logged in */
 .logged-in .hero,
@@ -802,4 +871,32 @@ section:nth-child(odd) {
     .form-actions .btn-primary {
         width: 100%;
     }
+    .dashboard-nav-list { /* Added for dashboard navigation responsiveness */
+        flex-direction: column;
+        align-items: center;
+    }
+    .dashboard-nav-link { /* Added for dashboard navigation responsiveness */
+        width: 100%;
+        text-align: center;
+        border-radius: 8px; /* Rounded corners for mobile tabs */
+    }
+}
+
+/* Gaya untuk tombol hapus */
+.btn-danger {
+    display: inline-block;
+    padding: 8px 15px;
+    background: var(--error); /* Warna merah untuk bahaya */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    margin-top: 15px; /* Memberi jarak dari konten di atasnya */
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Warna merah yang sedikit lebih gelap saat hover */
 }
