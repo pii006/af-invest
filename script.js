@@ -1,7 +1,7 @@
 // script.js
 
 // Base URL for your backend API
-// Ini adalah URL backend Heroku Anda yang sudah di-deploy
+// Pastikan URL ini adalah URL Heroku backend Anda yang sudah di-deploy
 const API_BASE_URL = 'https://af-invest-backend-api-anda-81bb84a552e2.herokuapp.com/api';
 
 // Helper function to show messages
@@ -181,9 +181,11 @@ function updateUIForAuth(isLoggedIn) {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Langsung tampilkan konten dan cek status auth saat DOM siap
+    // Langsung tampilkan konten utama saat DOM siap
     const contentWrapper = document.getElementById('content-wrapper');
     contentWrapper.classList.add('content-visible');
+    
+    // Check auth status on load
     const token = localStorage.getItem('token');
     if (token) {
         updateUIForAuth(true);
@@ -220,10 +222,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auth Modal Logic (Disesuaikan dengan HTML Anda)
     const authModal = document.getElementById('auth-modal');
     const authLink = document.getElementById('auth-link'); // Menggunakan ID yang ada di HTML Anda
+    const closeButton = authModal.querySelector('.close-button'); // Tombol close 'X' masih ada di HTML Anda
     const loginForm = document.getElementById('login-form');
-    const registerForm = document.getElementById('register-form'); // Form register masih ada di HTML
+    const registerForm = document.getElementById('register-form'); // Form register masih ada di HTML Anda
     const authModalTitle = document.getElementById('auth-modal-title');
-    const toggleFormLinks = document.querySelectorAll('.toggle-form-link'); // Link toggle form masih ada di HTML
+    const toggleFormLinks = document.querySelectorAll('.toggle-form-link'); // Link toggle form masih ada di HTML Anda
     const logoutLink = document.getElementById('logout-link');
 
     // Event listener untuk link "Login / Register"
@@ -235,6 +238,11 @@ document.addEventListener('DOMContentLoaded', () => {
         registerForm.classList.add('hidden');
         authModalTitle.textContent = 'Login';
         document.getElementById('auth-message').style.display = 'none'; // Clear previous messages
+    });
+
+    // Event listener untuk menutup modal saat klik tombol 'X'
+    closeButton.addEventListener('click', () => {
+        authModal.style.display = 'none';
     });
 
     // Event listener untuk menutup modal saat klik di luar konten modal
@@ -249,16 +257,9 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             if (e.target.dataset.form === 'register') {
-                // Jika ingin daftar, dan linknya mengarah ke Google Form
-                if (e.target.href && e.target.href.includes('forms.gle')) {
-                    window.open(e.target.href, '_blank'); // Buka Google Form di tab baru
-                    authModal.style.display = 'none'; // Tutup modal
-                } else {
-                    // Jika ada form register internal yang ingin di-toggle
-                    loginForm.classList.add('hidden');
-                    registerForm.classList.remove('hidden');
-                    authModalTitle.textContent = 'Daftar';
-                }
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                authModalTitle.textContent = 'Daftar';
             } else { // Jika ingin login
                 loginForm.classList.remove('hidden');
                 registerForm.classList.add('hidden');
