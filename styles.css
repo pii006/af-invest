@@ -25,24 +25,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Loading Screen Styles (Dihapus) */
-/* .loading-screen { ... } */
-/* .loading-container { ... } */
-/* .loading-logo { ... } */
-/* .loading-ring { ... } */
-/* .loading-particles { ... } */
-/* .particle { ... } */
-/* .loading-text { ... } */
-/* .loading-progress { ... } */
-/* .progress-bar { ... } */
-
-/* Keyframes (Dihapus yang terkait loading screen) */
-/* @keyframes spin { ... } */
-/* @keyframes pulse { ... } */
-/* @keyframes colorShift { ... } */
-/* @keyframes particleFade { ... } */
-/* @keyframes line { ... } */
-
 .hidden {
   opacity: 0;
   visibility: hidden;
@@ -89,30 +71,28 @@ body {
   text-decoration: none;
 }
 
+/* Menyesuaikan gaya logo untuk gambar */
+.logo .header-logo {
+  width: 40px; /* Ukuran gambar logo */
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%; /* Jika ingin logo bulat */
+  object-fit: cover;
+}
+
 .logo::after {
   content: '';
   position: absolute;
   bottom: -5px;
-  left: 40px;
-  width: 0;
+  left: 40px; /* Sesuaikan posisi garis bawah agar tidak tumpang tindih dengan gambar */
+  width: calc(100% - 50px); /* Sesuaikan lebar garis bawah */
   height: 2px;
   background: var(--primary);
   transition: width 0.3s ease;
 }
 
 .logo:hover::after {
-  width: 70%;
-}
-
-.logo svg {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  transition: transform 0.3s ease;
-}
-
-.logo:hover svg {
-  transform: rotate(45deg);
+  width: calc(100% - 10px); /* Sesuaikan lebar garis bawah saat hover */
 }
 
 .highlight {
@@ -471,10 +451,6 @@ section:nth-child(odd) {
 }
 
 @media (max-width: 768px) {
-  /* Loading screen related styles removed */
-  /* .loading-container { ... } */
-  /* .loading-logo { ... } */
-
   .nav-list {
     display: none;
     flex-direction: column;
@@ -535,12 +511,6 @@ section:nth-child(odd) {
 }
 
 @media (max-width: 600px) {
-  /* Loading screen related styles removed */
-  /* .loading-container { ... } */
-  /* .loading-logo { ... } */
-  /* .loading-text { ... } */
-  /* .loading-progress { ... } */
-
   .hero-title {
     font-size: 1.8rem;
   }
@@ -612,9 +582,22 @@ section:nth-child(odd) {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Tombol close 'X' dihapus, jadi aturan CSS ini juga dihapus */
-/* .close-button { ... } */
-/* .close-button:hover, .close-button:focus { ... } */
+.close-button {
+    color: var(--primary);
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--light);
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .modal-content h3 {
     text-align: center;
@@ -657,6 +640,8 @@ section:nth-child(odd) {
     justify-content: space-between;
     align-items: center;
     margin-top: 30px;
+    flex-wrap: wrap; /* Added for responsiveness */
+    gap: 15px; /* Added for spacing between items */
 }
 
 .form-actions .btn-primary {
@@ -665,6 +650,8 @@ section:nth-child(odd) {
     border-radius: 8px;
     cursor: pointer;
     border: none;
+    flex-grow: 1; /* Allow button to grow */
+    min-width: 120px; /* Minimum width for button */
 }
 
 .toggle-form-link {
@@ -673,6 +660,8 @@ section:nth-child(odd) {
     font-size: 0.9rem;
     cursor: pointer;
     transition: color 0.3s ease;
+    flex-grow: 1; /* Allow link to grow */
+    text-align: center; /* Center text */
 }
 
 .toggle-form-link:hover {
@@ -780,7 +769,6 @@ section:nth-child(odd) {
     margin-top: 20px;
 }
 
-
 /* Hide default sections when logged in */
 .logged-in .hero,
 .logged-in .about,
@@ -815,39 +803,3 @@ section:nth-child(odd) {
         width: 100%;
     }
 }
-
-    .logo-container {
-      position: relative;
-      width: 500px; 
-      height: 500px; /* Ukuran logo */
-      border: var(--border-width) solid var(--border-color);
-      border-radius: var(--border-radius);
-      background-color: var(--logo-bg);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 20px auto; /* Pusatkan logo */
-    }
-
-    .logo-img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .logo-header-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .header-logo {
-      height: 40px;
-      width: auto;
-    }
-
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-    }
