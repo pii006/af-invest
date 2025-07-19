@@ -15,7 +15,7 @@ function showMessage(elementId, message, type) {
     }, 5000); // Hide after 5 seconds
 }
 
-// Function to handle authentication (login)
+// Function to handle authentication (login/register)
 async function authenticateUser(endpoint, phoneNumber, password) {
     try {
         const response = await fetch(`${API_BASE_URL}/auth/${endpoint}`, {
@@ -37,6 +37,12 @@ async function authenticateUser(endpoint, phoneNumber, password) {
                     updateUIForAuth(true); // Update UI to logged-in state
                     fetchStockPicks(); // Load stock picks after login
                 }, 1000);
+            } else { // Ini adalah untuk register-manual-user
+                showMessage('auth-message', data.message, 'success');
+                // Setelah registrasi sukses, otomatis beralih ke form login
+                document.getElementById('login-form').classList.remove('hidden');
+                document.getElementById('register-form').classList.add('hidden');
+                document.getElementById('auth-modal-title').textContent = 'Login';
             }
         } else {
             showMessage('auth-message', data.message || 'Terjadi kesalahan.', 'error');
@@ -150,24 +156,21 @@ async function addStockPick(event) {
 
 // Function to update UI based on authentication status
 function updateUIForAuth(isLoggedIn) {
-    // Menggunakan ID yang benar sesuai HTML terbaru
-    const loginLink = document.getElementById('login-link');
-    const registerExternalLink = document.getElementById('register-external-link'); // Link daftar eksternal
+    // Menggunakan ID yang ada di HTML Anda
+    const authLink = document.getElementById('auth-link'); // Ini adalah link "Login / Register"
     const logoutLink = document.getElementById('logout-link');
     const dashboardSection = document.getElementById('dashboard-section');
     const contentWrapper = document.getElementById('content-wrapper');
 
     if (isLoggedIn) {
-        loginLink.classList.add('hidden');
-        registerExternalLink.classList.add('hidden'); // Sembunyikan link daftar
+        authLink.classList.add('hidden'); // Sembunyikan link "Login / Register"
         logoutLink.classList.remove('hidden');
         dashboardSection.classList.remove('hidden');
         contentWrapper.classList.add('logged-in');
         contentWrapper.classList.remove('not-logged-in');
         dashboardSection.scrollIntoView({ behavior: 'smooth' });
     } else {
-        loginLink.classList.remove('hidden');
-        registerExternalLink.classList.remove('hidden'); // Tampilkan link daftar
+        authLink.classList.remove('hidden'); // Tampilkan link "Login / Register"
         logoutLink.classList.add('hidden');
         dashboardSection.classList.add('hidden');
         contentWrapper.classList.remove('logged-in');
@@ -214,19 +217,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Auth Modal Logic
+    // Auth Modal Logic (Disesuaikan dengan HTML Anda)
     const authModal = document.getElementById('auth-modal');
-    const loginLink = document.getElementById('login-link'); // Menggunakan ID yang benar
+    const authLink = document.getElementById('auth-link'); // Menggunakan ID yang ada di HTML Anda
     const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form'); // Form register masih ada di HTML
     const authModalTitle = document.getElementById('auth-modal-title');
+    const toggleFormLinks = document.querySelectorAll('.toggle-form-link'); // Link toggle form masih ada di HTML
     const logoutLink = document.getElementById('logout-link');
 
-    // Event listener untuk link Login
-    loginLink.addEventListener('click', (e) => {
+    // Event listener untuk link "Login / Register"
+    authLink.addEventListener('click', (e) => {
         e.preventDefault();
         authModal.style.display = 'flex'; // Use flex to center
-        // Hanya tampilkan form login
+        // Secara default, tampilkan form login saat modal dibuka
         loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
         authModalTitle.textContent = 'Login';
         document.getElementById('auth-message').style.display = 'none'; // Clear previous messages
     });
@@ -238,12 +244,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Event listener untuk link toggle form di dalam modal
+    toggleFormLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (e.target.dataset.form === 'register') {
+                // Jika ingin daftar, dan linknya mengarah ke Google Form
+                if (e.target.href && e.target.href.includes('forms.gle')) {
+                    window.open(e.target.href, '_blank'); // Buka Google Form di tab baru
+                    authModal.style.display = 'none'; // Tutup modal
+                } else {
+                    // Jika ada form register internal yang ingin di-toggle
+                    loginForm.classList.add('hidden');
+                    registerForm.classList.remove('hidden');
+                    authModalTitle.textContent = 'Daftar';
+                }
+            } else { // Jika ingin login
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                authModalTitle.textContent = 'Login';
+            }
+            document.getElementById('auth-message').style.display = 'none'; // Clear messages on form toggle
+        });
+    });
+
     // Login Form Submission
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const phoneNumber = document.getElementById('login-phoneNumber').value;
         const password = document.getElementById('login-password').value;
         await authenticateUser('login', phoneNumber, password);
+    });
+
+    // Register Form Submission (Diaktifkan kembali karena ada di HTML Anda)
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const phoneNumber = document.getElementById('register-phoneNumber').value;
+        const password = document.getElementById('register-password').value;
+        await authenticateUser('register-manual-user', phoneNumber, password);
     });
 
     // Logout Link
