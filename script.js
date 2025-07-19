@@ -1,6 +1,6 @@
 // script.js
 
-// Base URL for your backend API
+// Base URL for your backend API (tetap ada untuk login/register)
 const API_BASE_URL = 'https://af-invest-backend-api-anda-81bb84a552e2.herokuapp.com/api'; // Pastikan URL ini adalah URL Heroku backend Anda yang sudah di-deploy
 
 // Helper function to show messages
@@ -39,7 +39,8 @@ async function authenticateUser(endpoint, phoneNumber, password) {
                     const authModal = document.getElementById('auth-modal');
                     if (authModal) authModal.style.display = 'none';
                     updateUIForAuth(true); // Update UI to logged-in state
-                    // Setelah login, secara default tampilkan Rekomendasi Saham
+                    // Setelah login, secara default tampilkan Edukasi Video
+                    showDashboardContent('educational-videos');
                 }, 1000);
             } else { // register-manual-user
                 showMessage('auth-message', data.message, 'success');
@@ -59,7 +60,6 @@ async function authenticateUser(endpoint, phoneNumber, password) {
         showMessage('auth-message', 'Terjadi kesalahan jaringan atau server tidak merespons.', 'error');
     }
 }
-
 
 // Function to update UI based on authentication status
 function updateUIForAuth(isLoggedIn) {
@@ -86,31 +86,11 @@ function updateUIForAuth(isLoggedIn) {
             contentWrapper.classList.add('not-logged-in');
         }
         localStorage.removeItem('token');
+        localStorage.removeItem('loggedInPhoneNumber'); // Hapus nomor telepon saat logout
     }
 }
 
-// Function to show specific dashboard content
-async function fetchSpreadsheetLinks() {
-    const spreadsheetsList = document.getElementById('spreadsheet-links-list');
-    if (!spreadsheetsList) return;
-    spreadsheetsList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat link spreadsheet...</p>';
-    // TODO: Implement actual fetch from backend API for spreadsheets
-    // For now, mock data:
-    setTimeout(() => {
-        spreadsheetsList.innerHTML = `
-            <div class="spreadsheet-item">
-                <h4>Rekomendasi Saham Update</h4>
-                <p>Spreadsheet ini berisi stockpick rekomendasi saham.</p>
-                <a href="https://docs.google.com/spreadsheets/d/someid1" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
-            </div>
-            <div class="spreadsheet-item">
-                <h4>Daftar Saham Dividen</h4>
-                <p>Daftar saham dengan riwayat dividen yang menarik.</p>
-                <a href="https://docs.google.com/spreadsheets/d/someid2" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
-            </div>
-        `;
-    }, 1000);
-}
+// Function to show specific dashboard content (still for member dashboard)
 function showDashboardContent(contentType) {
     // Hide all content sections
     document.querySelectorAll('.dashboard-content').forEach(section => {
@@ -152,7 +132,6 @@ async function fetchEducationalVideos() {
     const videosList = document.getElementById('educational-videos-list');
     if (!videosList) return;
     videosList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat video edukasi...</p>';
-    // TODO: Implement actual fetch from backend API for videos
     // For now, mock data:
     setTimeout(() => {
         videosList.innerHTML = `
@@ -174,7 +153,6 @@ async function fetchPdfMaterials() {
     const pdfsList = document.getElementById('educational-pdfs-list');
     if (!pdfsList) return;
     pdfsList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat materi PDF...</p>';
-    // TODO: Implement actual fetch from backend API for PDFs
     // For now, mock data:
     setTimeout(() => {
         pdfsList.innerHTML = `
@@ -192,12 +170,31 @@ async function fetchPdfMaterials() {
     }, 1000);
 }
 
+async function fetchSpreadsheetLinks() {
+    const spreadsheetsList = document.getElementById('spreadsheet-links-list');
+    if (!spreadsheetsList) return;
+    spreadsheetsList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat link spreadsheet...</p>';
+    // For now, mock data:
+    setTimeout(() => {
+        spreadsheetsList.innerHTML = `
+            <div class="spreadsheet-item">
+                <h4>Rekomendasi Swing Trade (Januari 2025)</h4>
+                <p>Spreadsheet ini berisi rekomendasi saham untuk swing trade di bulan Januari.</p>
+                <a href="https://docs.google.com/spreadsheets/d/someid1" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
+            </div>
+            <div class="spreadsheet-item">
+                <h4>Daftar Saham Dividen</h4>
+                <p>Daftar saham dengan riwayat dividen yang menarik.</p>
+                <a href="https://docs.google.com/spreadsheets/d/someid2" target="_blank" class="btn btn-primary">Buka Spreadsheet</a>
+            </div>
+        `;
+    }, 1000);
+}
 
 async function fetchArticles() {
     const articlesList = document.getElementById('articles-list');
     if (!articlesList) return;
     articlesList.innerHTML = '<p style="text-align: center; color: var(--light);">Memuat artikel edukasi...</p>';
-    // TODO: Implement actual fetch from backend API for articles
     // For now, mock data:
     setTimeout(() => {
         articlesList.innerHTML = `
@@ -216,11 +213,95 @@ async function fetchArticles() {
 }
 
 
+// --- Testimonial Carousel Logic ---
+let currentSlide = 0;
+let autoSlideInterval;
+
+function showSlide(index) {
+    const carouselInner = document.getElementById('carousel-inner');
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dotsContainer = document.getElementById('carousel-dots');
+    
+    if (!carouselInner || slides.length === 0 || !dotsContainer) return;
+
+    if (index >= slides.length) {
+        currentSlide = 0;
+    } else if (index < 0) {
+        currentSlide = slides.length - 1;
+    } else {
+        currentSlide = index;
+    }
+
+    const offset = -currentSlide * 100;
+    carouselInner.style.transform = `translateX(${offset}%)`;
+    updateDots();
+}
+
+function nextSlide() {
+    showSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+    showSlide(currentSlide - 1);
+}
+
+function createDots() {
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dotsContainer = document.getElementById('carousel-dots');
+    if (!dotsContainer) return;
+
+    dotsContainer.innerHTML = ''; // Clear existing dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        dot.addEventListener('click', () => {
+            showSlide(index);
+            stopAutoSlide(); // Stop auto-slide on manual navigation
+            startAutoSlide(); // Restart auto-slide after a delay
+        });
+        dotsContainer.appendChild(dot);
+    });
+    updateDots();
+}
+
+function updateDots() {
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, index) => {
+        if (index === currentSlide) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+function startAutoSlide() {
+    stopAutoSlide(); // Clear any existing interval
+    autoSlideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+}
+
+function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
+}
+
+// --- End Testimonial Carousel Logic ---
+
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
     // Content wrapper should be visible by default as loading screen is removed
     const contentWrapper = document.getElementById('content-wrapper');
     if (contentWrapper) contentWrapper.classList.add('content-visible');
+    
+    // Check auth status on load
+    const token = localStorage.getItem('token');
+    if (token) {
+        updateUIForAuth(true);
+        // Default to showing educational videos on login/load
+        showDashboardContent('educational-videos');
+    } else {
+        updateUIForAuth(false);
+    }
 
     // Menu Toggle
     const menuToggle = document.getElementById('menu-toggle');
@@ -331,4 +412,28 @@ document.addEventListener('DOMContentLoaded', () => {
             showDashboardContent(contentType);
         });
     });
+
+    // Initialize Testimonial Carousel
+    createDots();
+    showSlide(0); // Show the first slide initially
+    startAutoSlide(); // Start auto-sliding
+
+    // Add event listeners for carousel buttons
+    const prevButton = document.querySelector('.carousel-button.prev');
+    const nextButton = document.querySelector('.carousel-button.next');
+
+    if (prevButton) {
+        prevButton.addEventListener('click', () => {
+            prevSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        });
+    }
+    if (nextButton) {
+        nextButton.addEventListener('click', () => {
+            nextSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        });
+    }
 });
