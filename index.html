@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AF Invest</title>
   <!-- Link ke file CSS eksternal -->
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style.css" />
   <!-- Link ke Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
 </head>
@@ -14,17 +14,10 @@
   <div class="content-wrapper" id="content-wrapper">
     <header class="header" role="banner">
       <div class="header-container">
-        <a href="Home" class="logo" aria-label="AF Invest">
-  
-    <!-- Logo Container -->
-
-        <div class="logo-header-wrapper">
-          <img src="assets\AFINVESTLOGO.jpg" class="header-logo">
-          <a href="#" class="logo" aria-label="AF Invest">
-         AF<span class="highlight">Invest</span>
-          </a>
-        </div>
-
+        <!-- Logo dengan path gambar lokal yang benar -->
+        <a href="#" class="logo" aria-label="AF Invest">
+          <img src="assets/AFINVESTLOGO.jpg" alt="AF Invest Logo" class="header-logo">
+          AF<span class="highlight">Invest</span>
         </a>
         <nav class="nav" role="navigation" aria-label="Menu navigasi utama">
           <ul class="nav-list" id="nav-list">
@@ -32,6 +25,7 @@
             <li class="nav-item"><a href="#layanan" class="nav-link">Layanan</a></li>
             <li class="nav-item"><a href="#mengapa" class="nav-link">Mengapa Kami?</a></li>
             <li class="nav-item"><a href="#kontak" class="nav-link">Kontak</a></li>
+            <!-- Link Login/Register tunggal -->
             <li class="nav-item"><a href="#" class="nav-link" id="auth-link">Login / Register</a></li>
             <li class="nav-item"><a href="#" class="nav-link hidden" id="logout-link">Logout</a></li>
           </ul>
@@ -86,7 +80,7 @@
             
             <!-- New Priority Group Card -->
             <div class="service-card priority-group-card" role="listitem" tabindex="0" aria-label="Grup Diskusi Prioritas Batch Terakhir">
-              <h4>Grup Diskusi Prioritas <span style="color: var(--error);"></span></h4>
+              <h4>Grup Diskusi Prioritas <span style="color: var(--error);">(Batch Terakhir!)</span></h4>
               <p>Dalami ekonomi global, fundamental, teknikal, dan market update secara terarah dengan mentor berpengalaman. Slot terbatas!</p>
               <div class="service-details">
                 
@@ -100,10 +94,10 @@
                   <li>Konsultasi terbatas secara personal</li>
                   <li>Network & komunitas aktif</li>
                 </ul>
-                <p style="margin-top: 15px; font-weight: bold;"> <a href="https://wa.me/6285711152401" ></a></p>
+                <p style="margin-top: 15px; font-weight: bold;">Hubungi: <a href="https://wa.me/6285711152401" style="color: var(--primary); text-decoration: none;">@rafii6969</a></p>
                 <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">*Tidak ada paksaan untuk bergabung. Informasi & analisis teknikal terbatas tetap dibagikan di grup umum.</p>
               </div>
-              <a href="https://forms.gle/F4VFK17aPbiPZg9j9" class="btn btn-primary" style="margin-top: 20px;">Daftar Sekarang!</a>
+              <a href="https://wa.me/6285711152401" class="btn btn-primary" style="margin-top: 20px;">Daftar Sekarang!</a>
             </div>
 
             <div class="service-card" data-service="stock-recommendations" role="listitem" tabindex="0" aria-label="Rekomendasi Saham Harian">
@@ -120,7 +114,7 @@
               <h4>Edukasi Investasi</h4>
               <p>Akses modul pembelajaran dan tutorial tentang dasar-dasar investasi saham.</p>
               <div class="service-details">Materi edukasi dirancang untuk pemula hingga investor menengah, mencakup berbagai topik penting.</div>
-            </div>
+            </article>
             <div class="service-card" data-service="portfolio-review" role="listitem" tabindex="0" aria-label="Review Portofolio (Premium)">
               <h4>Review Portofolio (Premium)</h4>
               <p>Dapatkan evaluasi dan saran personal untuk portofolio investasi Anda dari ahli kami.</p>
@@ -211,7 +205,7 @@
       <div class="container">
         <h3 class="section-title" id="social-media-title">Ikuti Kami di Media Sosial</h3>
         <p class="section-text">Dapatkan informasi terbaru dan tips menarik tentang investasi saham!</p>
-        <div style="display: flex; justify-content: center; gap: 20px;"></div>
+        <div style="display: flex; justify-content: center; gap: 20px;">
           <a href="https://www.instagram.com/kertai.academy/" class="btn btn-primary" style="flex: 1; max-width: 150px;">Instagram</a>
           <a href="https://www.tiktok.com/@kertai.academy" class="btn btn-primary" style="flex: 1; max-width: 150px;">TikTok</a>
         </div>
@@ -219,14 +213,14 @@
     </section>
 
     <footer class="footer">
-      <p>&copy; 2025 AF Invest Community. Semua hak dilindungi</p>
+      <p>&copy; 2025 AF Invest Community. Semua hak dilindungi.</p>
     </footer>
   </div>
 
   <!-- Login/Register Modal -->
   <div id="auth-modal" class="modal">
     <div class="modal-content">
-      <!-- Tombol close 'X' dihapus -->
+      <span class="close-button">&times;</span>
       <h3 id="auth-modal-title">Login</h3>
       <div class="message-box" id="auth-message"></div>
 
@@ -243,7 +237,6 @@
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">Login</button>
           <a href="https://forms.gle/F4VFK17aPbiPZg9j9" class="toggle-form-link" data-form="register">Belum punya akun? Daftar di sini.</a>
-        
         </div>
       </form>
 
