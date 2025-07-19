@@ -40,7 +40,6 @@ async function authenticateUser(endpoint, phoneNumber, password) {
                     if (authModal) authModal.style.display = 'none';
                     updateUIForAuth(true); // Update UI to logged-in state
                     // Setelah login, secara default tampilkan Rekomendasi Saham
-                    showDashboardContent('stock-picks');
                 }, 1000);
             } else { // register-manual-user
                 showMessage('auth-message', data.message, 'success');
@@ -110,9 +109,6 @@ function showDashboardContent(contentType) {
 
     // Fetch data for the selected content type
     switch (contentType) {
-        case 'stock-picks':
-            fetchStockPicks();
-            break;
         case 'educational-videos':
             fetchEducationalVideos();
             break;
@@ -225,16 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Content wrapper should be visible by default as loading screen is removed
     const contentWrapper = document.getElementById('content-wrapper');
     if (contentWrapper) contentWrapper.classList.add('content-visible');
-    
-    // Check auth status on load
-    const token = localStorage.getItem('token');
-    if (token) {
-        updateUIForAuth(true);
-        // Default to showing stock picks on login/load
-        showDashboardContent('stock-picks');
-    } else {
-        updateUIForAuth(false);
-    }
 
     // Menu Toggle
     const menuToggle = document.getElementById('menu-toggle');
